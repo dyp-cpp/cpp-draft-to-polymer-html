@@ -84,40 +84,30 @@
 	</xsl:template>
 	
 	<xsl:template match="definition">
-		<!-- maybe use <dl is="cxx-definition-dection"> ?? -->
-		<xsl:call-template name="generalized-section">
-			<xsl:with-param name="heading-node" select="./defines"/>
-			<xsl:with-param name="intern-template" select="'definition-intern'"/>
-		</xsl:call-template>
+		<dl is="cxx-definition-section">
+			<xsl:apply-templates select="*"/>
+		</dl>
 	</xsl:template>
 
 	<xsl:template match="definition" mode="section-intern">
 		<xsl:if test="alt-name">
-			<div class="alt-name">
-				<xsl:text>Also called:</xsl:text>
-				<ul class="alt-name">
-					<xsl:apply-templates select="alt-name"/>
-				</ul>
-			</div>
+			<xsl:apply-templates select="alt-name"/>
 		</xsl:if>
 		
 		<xsl:apply-templates select="explanation"/>
 		
 		<xsl:apply-templates select="*[name() != 'alt-name' and name() != 'explanation'] | text()"/>
 	</xsl:template>
-	<xsl:template match="definition/defines" mode="heading">
-		<xsl:apply-templates select="* | text()"/>
-	</xsl:template>
-	<xsl:template match="definition/defines"/>
-	<xsl:template match="definition/alt-name">
-		<li>
+	<xsl:template match="definition/defines">
+		<dt id="{../@id}">
 			<xsl:apply-templates select="@* | * | text()"/>
-		</li>
+		</dt>
+	</xsl:template>
+	<xsl:template match="definition/alt-name">
+		<dt><xsl:apply-templates select="@* | * | text()"/></dt>
 	</xsl:template>
 	<xsl:template match="definition/explanation">
-		<div class="explanation">
-			<xsl:apply-templates select="@* | * | text()"/>
-		</div>
+		<dd><xsl:apply-templates select="@* | * | text()"/></dd>
 	</xsl:template>
 	
 	<xsl:template match="par[@number]">
