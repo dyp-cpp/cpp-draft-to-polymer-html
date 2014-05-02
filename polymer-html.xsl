@@ -37,7 +37,7 @@
 	<xsl:template name="heading">
 		<xsl:param name="heading-node"/>
 		
-		<xsl:element name="{concat('h',1+@level)}">
+		<xsl:element name="h1">
 			<xsl:apply-templates select="$heading-node" mode="heading"/>
 		</xsl:element>
 	</xsl:template>
